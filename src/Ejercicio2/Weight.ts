@@ -1,6 +1,6 @@
 import {isConvertible} from './isConvertible';
 
-declare enum WeightUnits {
+export enum WeightUnits {
   Gt = 15,
   Mt = 12,
   T = 6,
