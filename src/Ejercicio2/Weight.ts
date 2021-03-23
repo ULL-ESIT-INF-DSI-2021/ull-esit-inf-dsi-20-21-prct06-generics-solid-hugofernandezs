@@ -14,10 +14,16 @@ declare enum WeightUnits {
 
 export class Weight implements isConvertible<WeightUnits> {
   static readonly units = WeightUnits;
+  value_: number;
+  valueUnits_: WeightUnits;
 
-  public convert(units: WeightUnits, originalUnits: WeightUnits,
-      data: number): number {
-    const power: number = units - originalUnits;
-    return data * Math.pow(10, power);
+  constructor(newValue: number, newUnit: WeightUnits) {
+    this.value_ = newValue;
+    this.valueUnits_ = newUnit;
+  }
+
+  public convert(units: WeightUnits): number {
+    const power: number = units - this.valueUnits_;
+    return this.value_ * Math.pow(10, power);
   }
 }

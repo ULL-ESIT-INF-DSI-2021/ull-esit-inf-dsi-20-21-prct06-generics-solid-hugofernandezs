@@ -1,6 +1,6 @@
 import {isConvertible} from './isConvertible';
 
-declare enum LengthUnits {
+export enum LengthUnits {
   Ym = 24,
   Zm = 21,
   Em = 18,
@@ -26,13 +26,16 @@ declare enum LengthUnits {
 
 export class Length implements isConvertible<LengthUnits> {
   static readonly units = LengthUnits;
+  value_: number;
+  valueUnits_: LengthUnits;
 
-  public convert(units: LengthUnits, originalUnits: LengthUnits,
-      data: number): number {
-    const power: number = units - originalUnits;
-    return data * Math.pow(10, power);
+  constructor(newValue: number, newUnit: LengthUnits) {
+    this.value_ = newValue;
+    this.valueUnits_ = newUnit;
+  }
+
+  public convert(units: LengthUnits): number {
+    const power: number = units - this.valueUnits_;
+    return this.value_ * Math.pow(10, power);
   }
 }
-
-const aux: Length = new Length();
-console.log(`${aux.convert(Length.units.km, Length.units.hm, 1)}`);
