@@ -8,9 +8,17 @@
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
     "doc": "typedoc; touch ./docs/.nojekyll"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct06-generics-solid-hugofernandezs.git"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Hugo Fernández Solís",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct06-generics-solid-hugofernandezs/issues"
+  },
+  "homepage": "https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct06-generics-solid-hugofernandezs#readme",
   "devDependencies": {
     "@types/chai": "^4.2.15",
     "@types/mocha": "^8.2.2",
