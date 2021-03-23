@@ -1,15 +1,21 @@
 import {isConvertible} from './isConvertible';
 
 export enum WeightUnits {
-  Gt = 15,
-  Mt = 12,
-  T = 6,
-  kg = 3,
-  g = 0,
-  mg = -3,
-  µg = -6,
-  ng = -9,
-  pg = -12,
+  Gt = 1000000000000000,
+  Mt = 1000000000000,
+  T = 1000000,
+  kg = 1000,
+  hg = 100,
+  dag = 10,
+  g = 1,
+  dg = 0.1,
+  cg = 0.01,
+  mg = 0.001,
+  µg = 0.000001,
+  ng = 0.000000001,
+  pg = 0.000000000001,
+  pound = 0.00220462,
+  ounce = 0.035274
 };
 
 export class Weight implements isConvertible<WeightUnits> {
@@ -23,7 +29,7 @@ export class Weight implements isConvertible<WeightUnits> {
   }
 
   public convert(units: WeightUnits): number {
-    const power: number = units - this.valueUnits_;
-    return this.value_ * Math.pow(10, power);
+    const grams: number = this.value_ / this.valueUnits_;
+    return grams * units;
   }
 }

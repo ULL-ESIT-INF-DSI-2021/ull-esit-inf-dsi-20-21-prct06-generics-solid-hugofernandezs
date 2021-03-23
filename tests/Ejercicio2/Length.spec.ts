@@ -23,4 +23,24 @@ describe('Se puede crear la clase Length y se puede convertir.', () => {
     const length = new Length(1, Length.units.m);
     expect(length.convert(Length.units.m)).to.be.deep.equal(1);
   });
+
+  it('Se puede pasar de m a milla.', () => {
+    const length = new Length(1, Length.units.m);
+    expect(length.convert(Length.units.mile)).to.be.deep.equal(1609.34);
+  });
+
+  it('Se puede pasar de km a milla.', () => {
+    const length = new Length(1, Length.units.km);
+    expect(length.convert(Length.units.mile)).to.be.deep.equal(1.60934);
+  });
+
+  it('Se puede pasar de m a pulgadas.', () => {
+    const length = new Length(1, Length.units.m);
+    expect(length.convert(Length.units.inche)).to.be.deep.equal(0.0254);
+  });
+
+  it('Se puede pasar de pulgada a milla.', () => {
+    const length = new Length(1, Length.units.inche);
+    expect(length.convert(Length.units.mile)).to.be.equal(63359.84251968504);
+  });
 });

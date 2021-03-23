@@ -1,27 +1,29 @@
 import {isConvertible} from './isConvertible';
 
 export enum LengthUnits {
-  Ym = 24,
-  Zm = 21,
-  Em = 18,
-  Pm = 15,
-  Tm = 12,
-  Gm = 9,
-  Mm = 6,
-  km = 3,
-  hm = 2,
-  dam = 1,
-  m = 0,
-  dm = -1,
-  cm = -2,
-  mm = -3,
-  µm = -6,
-  nm = -9,
-  pm = -12,
-  fm = -15,
-  am = -18,
-  zm = -21,
-  ym = -24
+  Ym = 1000000000000000000000000,
+  Zm = 1000000000000000000000,
+  Em = 1000000000000000000,
+  Pm = 1000000000000000,
+  Tm = 1000000000000,
+  Gm = 1000000000,
+  Mm = 1000000,
+  km = 1000,
+  hm = 100,
+  dam = 10,
+  m = 1,
+  dm = 0.1,
+  cm = 0.01,
+  mm = 0.001,
+  µm = 0.000001,
+  nm = 0.000000001,
+  pm = 0.000000000001,
+  fm = 0.000000000000001,
+  am = 0.000000000000000001,
+  zm = 0.000000000000000000001,
+  ym = 0.000000000000000000000001,
+  mile = 1609.34,
+  inche = 0.0254
 };
 
 export class Length implements isConvertible<LengthUnits> {
@@ -35,7 +37,7 @@ export class Length implements isConvertible<LengthUnits> {
   }
 
   public convert(units: LengthUnits): number {
-    const power: number = units - this.valueUnits_;
-    return this.value_ * Math.pow(10, power);
+    const meters: number = this.value_ / this.valueUnits_;
+    return meters * units;
   }
 }

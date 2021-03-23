@@ -23,4 +23,14 @@ describe('Se puede crear la clase Weight y se puede convertir.', () => {
     const weight = new Weight(1, Weight.units.g);
     expect(weight.convert(Weight.units.g)).to.be.deep.equal(1);
   });
+
+  it('Se puede pasar de g a libras.', () => {
+    const weight = new Weight(1, Weight.units.g);
+    expect(weight.convert(Weight.units.pound)).to.be.deep.equal(0.00220462);
+  });
+
+  it('Se puede pasar de g a onzas.', () => {
+    const weight = new Weight(1, Weight.units.g);
+    expect(weight.convert(Weight.units.ounce)).to.be.deep.equal(0.035274);
+  });
 });
