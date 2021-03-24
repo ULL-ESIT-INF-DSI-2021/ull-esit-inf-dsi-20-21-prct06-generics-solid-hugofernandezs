@@ -25,7 +25,7 @@ export class StreamableCollection implements IsStreamableCollection {
   /**
    * Finds a streamable object that matches the name.
    */
-  public findByName(name: string): StreamableCollection | number {
+  public findByName(name: string): StreamableCollection | undefined {
     this.collection_.forEach((object) => {
       if (object.getName() === name) {
         return object;
