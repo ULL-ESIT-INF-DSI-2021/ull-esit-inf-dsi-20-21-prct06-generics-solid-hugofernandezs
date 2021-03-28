@@ -17,6 +17,13 @@ export class FighterEncyclopedia {
   }
 
   /**
+   * Returns the encyclopedia array.
+   */
+  public get getEncyclopedia(): Fighter[] {
+    return this.encyclopedia;
+  }
+
+  /**
    * Stores a fighter in the encyclopedia.
    * @param fighter Fighter to be stored.
    */
@@ -30,14 +37,8 @@ export class FighterEncyclopedia {
    * @returns The fighter with the stats. If no fighter is found it will return
    * a fighter with default stats, that's 0 in all stats and no name.
    */
-  public getByName(fighterName: string): Fighter | number {
-    /* this.encyclopedia.forEach((fighter) => {
-      if (fighter.name === fighterName) {
-        return fighter;
-      }
-    });
-    */
-    return -1;
+  public getByName(fighterName: string): Fighter | undefined {
+    return this.encyclopedia.find((fighter) => fighter.name === fighterName);
   }
 
   /**

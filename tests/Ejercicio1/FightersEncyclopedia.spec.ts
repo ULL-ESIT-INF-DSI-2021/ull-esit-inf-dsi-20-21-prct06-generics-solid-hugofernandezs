@@ -1,37 +1,30 @@
 import 'mocha';
 import {expect} from 'chai';
 import {DragonBallFighter} from '../../src/Ejercicio1/DragonBallFighter';
+import {FighterEncyclopedia} from '../../src/Ejercicio1/FighterEncyclopedia';
 
 const goku = new DragonBallFighter("Goku", 100, 1000, 300, 500,
     "Disculpa, vi que bajaste la guardia y simplemente ataque, ¡ja!",
-    "Sayayin");
+    "Saiyajin");
 
-describe('Creación de un luchador de marvel y acceso a sus atributos.', () => {
-  it('Se puede acceder a su nombre.', () => {
-    expect(goku.name).to.be.deep.equal("Goku");
+const vegeta = new DragonBallFighter("Vegeta", 100, 1000, 300, 500,
+    "¡Yo soy el príncipe de todos los Saiyajin!",
+    "Saiyajin");
+
+
+const encyclopedia = new FighterEncyclopedia([goku]);
+
+describe('Creación de la enciclopedia y acceso a sus métodos básicos.', () => {
+  it('Se puede almacenar un luchador.', () => {
+    encyclopedia.store(vegeta);
+    expect(encyclopedia.getEncyclopedia).to.be.deep.equal([goku, vegeta]);
   });
 
-  it('Se puede acceder a su velocidad.', () => {
-    expect(goku.speed).to.be.deep.equal(100);
-  });
-  it('Se puede acceder a su vida.', () => {
-    expect(goku.health).to.be.deep.equal(1000);
+  it('Se puede buscar por nombre.', () => {
+    expect(encyclopedia.getByName("Goku")).to.be.deep.equal(goku);
   });
 
-  it('Se puede acceder a su ataque.', () => {
-    expect(goku.attack).to.be.deep.equal(300);
-  });
-
-  it('Se puede acceder a su defensa.', () => {
-    expect(goku.defense).to.be.deep.equal(500);
-  });
-
-  it('Se puede acceder a su frase.', () => {
-    expect(goku.sentence).to.be.deep.equal(
-        "Disculpa, vi que bajaste la guardia y simplemente ataque, ¡ja!");
-  });
-
-  it('Se puede acceder a su raza.', () => {
-    expect(goku.race).to.be.deep.equal("Sayayin");
+  it('Se puede comprobar si un luchador ya está.', () => {
+    expect(encyclopedia.find(goku)).to.be.equal(true);
   });
 });
