@@ -399,240 +399,101 @@ Imagine que tiene que diseñar el modelo de datos de una plataforma de vídeo en
 
 
 #### **Desarrollo**:
-Para este ejercicio hemos desarrollado una interfaz `Movable` que defina todos los vehículos que son móviles.
+Para este ejercicio hemos desarrollado una interfaz `Streamable` que defina todos los objetos que son stremeables. Después hemos creado una clase abstracta `StreamableObject` que implemente esta interfaz. Esta interfaz requiere un nombre, un director y una fecha. Al igual que atributos para acceder a todos estos métodos.
 
+Interfaz Streamable:
 ```typescript
-interface Movable {
-  weight_: number;
-  speed_: number;
-  year_: number;
+interface Streamable {
+  name_: string;
+  date_: string;
+  director_: string;
+
+  getName(): string;
+  getDate(): string;
+  getDirector(): string;
 }
 ```
 
-Luego hemos creado una clase abstracta `Vehicle` que sirva como clase padre para el resto de vehículos. Esta clase implementa la interfaz `Movable` y añade funciones para acceder a los atributos. Además de una función `Type` que devuelve el tipo del vehículo.
-
+ClaseStreamableObject:
 ```typescript
-abstract class Vehicle implements Movable {
-  weight_: number;
-  speed_: number;
-  year_: number;
+export abstract class StreamableObject implements Streamable {
+  name_: string;
+  date_: string;
+  director_: string;
 
-  constructor(weight: number, speed: number, year: number) {
-    this.weight_ = weight;
-    this.speed_ = speed;
-    this.year_ = year;
+  constructor(name: string, date: string, director: string) {
+    this.name_ = name;
+    this.date_ = date;
+    this.director_ = director;
   }
 
-  public get weight(): number {
-    return this.weight_;
+  public getName(): string {
+    return this.name_;
   }
 
-  public get speed(): number {
-    return this.speed_;
+  public getDate(): string {
+    return this.date_;
   }
 
-  public get year(): number {
-    return this.year_;
-  }
-
-  public type(): string {
-    return "Vehicle";
-  }
-}
-```
-
-Luego, para cada vehículo hemos creado una clase que hereda de la clase `Vehicle` y a todos les he añadido alguna característica especial. Por ejemplo a los coches les he añadido la marca, a las bicis el número de marchas, a las guaguas el número de pasajeros... Y todos modifican la función `Type` para que devuelva su tipo exacto.
-
-```typescript
-export class Car extends Vehicle {
-  brand_: string;
-
-  constructor(weight: number, speed: number, year: number, brand: string) {
-    super(weight, speed, year);
-    this.brand_ = brand;
-  }
-
-  public get brand(): string {
-    return this.brand_;
-  }
-
-  public type(): string {
-    return "Car";
+  public getDirector(): string {
+    return this.director_;
   }
 }
 ```
 
+Luego hamos creado 2 tipos de objetos distinto: película, serie y documental. Los tres implementan la clase abstarcta `StreamableObject` definida anteriormente por lo que automaticamente se converten en objetos stremeables. Además cada uno tiene un atributo extra. Los documentales el animal del mismo, las series el número de temporadas y la película su género.
+
+Por ejemplo, la película quedaría así:
 ```typescript
-export class Motorbike extends Vehicle {
-  sidecar_: boolean;
+export class Film extends StreamableObject {
+  genre_: string;
 
-  constructor(weight: number, speed: number, year: number, sidecar: boolean) {
-    super(weight, speed, year);
-    this.sidecar_ = sidecar;
+  constructor(name: string, date: string, director: string, genre: string) {
+    super(name, date, director);
+    this.genre_ = genre;
   }
 
-  public get sidecar(): boolean {
-    return this.sidecar_;
+  public getName(): string {
+    return this.name_;
   }
 
-  public type(): string {
-    return "Motorbike";
+  public getDate(): string {
+    return this.date_;
+  }
+
+  public getDirector(): string {
+    return this.director_;
+  }
+c getGenre(): string {
+    return this.genre_;
   }
 }
 ```
 
+El resto de objetos quedarían de la misma forma pero cambiando el género por los atributos motrados anteriormente.
+
+Además hemos creado una interfaz `IsStreamableCollection` que define una colección de objetos stremeables. Es decir, un vector de estos objetos y métodos para encontrarlos por nombre, director o fecha. Luego hemos creado una clase `StreamableCollection` que implemente esta interfaz y almacene objetos `Stremeables`
 ```typescript
-export class Scooter extends Vehicle {
-  constructor(weight: number, speed: number, year: number) {
-    super(weight, speed, year);
+export class StreamableCollection implements IsStreamableCollection {
+  collection_: StreamableObject[];
+
+  constructor(collection: StreamableObject[]) {
+    this.collection_ = collection;
   }
 
-  public type(): string {
-    return "Scooter";
+  public findByName(name: string): StreamableObject | undefined {
+    return this.collection_.find((aux) => aux.getName() === name);
+  }
+
+  public findByDate(date: string): StreamableObject | undefined {
+    return this.collection_.find((aux) => aux.getDate() === date);
+  }
+
+  public findByDirector(director: string): StreamableObject | undefined {
+    return this.collection_.find((aux) => aux.getDirector() === director);
   }
 }
 ```
-
-```typescript
-export class Train extends Vehicle {
-  destination_: string;
-
-  constructor(weight: number, speed: number, year: number, dest: string) {
-    super(weight, speed, year);
-    this.destination_ = dest;
-  }
-
-  public get destination(): string {
-    return this.destination_;
-  }
-
-  public type(): string {
-    return "Train";
-  }
-}
-```
-
-```typescript
-export class Bus extends Vehicle {
-  passengers_: number;
-
-  constructor(weight: number, speed: number, year: number, pass: number) {
-    super(weight, speed, year);
-    this.passengers_ = pass;
-  }
-
-  public get passengers(): number {
-    return this.passengers_;
-  }
-
-  public type(): string {
-    return "Bus";
-  }
-}
-```
-
-```typescript
-export class Bicycle extends Vehicle {
-  gears_: number;
-
-  constructor(weight: number, speed: number, year: number, gears: number) {
-    super(weight, speed, year);
-    this.gears_ = gears;
-  }
-
-  public get gears(): number {
-    return this.gears_;
-  }
-
-  public type(): string {
-    return "Bicycle";
-  }
-}
-```
-
-Por último hemos creado la clase `Street` que implementa una calle y almacena todos los vehículos en ella. Además añade dos métodos para añadir y quitar vehículos. Otro para mostrar la cantidad de cada vehículo que circula por la calle y otro que ordena los vehículos y los muestra por orden de velocidad.
-
-```typescript
-export class Street {
-  private vehicles_: Vehicle[];
-
-  constructor(newVehicles: Vehicle[]) {
-    this.vehicles_ = newVehicles;
-  }
-
-  addVehicle(newVehicle: Vehicle) {
-    this.vehicles_.push(newVehicle);
-  }
-
-  removeVehicle(oldVehicle: Vehicle) {
-    this.vehicles_.forEach((vehicle, index) => {
-      if (vehicle === oldVehicle) {
-        this.vehicles_.splice(index, 1);
-      }
-    });
-  }
-
-  showTypes() {
-    let countCars: number = 0;
-    let countMotorbikes: number = 0;
-    let countScooters: number = 0;
-    let countTrains: number = 0;
-    let countBuses: number = 0;
-    let countBicycles: number = 0;
-    this.vehicles_.forEach((vehicle) => {
-      switch (vehicle.type()) {
-        case "Car": {
-          countCars++;
-        }
-        case "Motorbike": {
-          countMotorbikes++;
-        }
-        case "Scooter": {
-          countScooters++;
-        }
-        case "Train": {
-          countTrains++;
-        }
-        case "Bus": {
-          countBuses++;
-        }
-        case "Bicycle": {
-          countBicycles++;
-        }
-        default: {
-
-        }
-      }
-    });
-    console.log(`Cars: ${countCars}`);
-    console.log(`Motorbikes: ${countMotorbikes}`);
-    console.log(`Scooters: ${countScooters}`);
-    console.log(`Trains: ${countTrains}`);
-    console.log(`Buses: ${countBuses}`);
-    console.log(`Bicycles: ${countBicycles}`);
-  }
-
-  speedOrder() {
-    const unordered: Vehicle[] = this.vehicles_;
-    const ordered: Vehicle[] = [];
-    while (unordered.length > 0) {
-      let vehicleIndex: number = 0;
-      let maxSpeed: number = 0;
-      unordered.forEach((vehicle, index) => {
-        if (vehicle.speed > maxSpeed) {
-          maxSpeed = vehicle.speed;
-          vehicleIndex = index;
-        }
-      });
-      ordered.push(unordered[vehicleIndex]);
-      unordered.splice(vehicleIndex, 1);
-    }
-    console.table(ordered);
-  }
-}
-```
-
-
 
 ## **CONCLUSIÓN**
-Las clases en typescript son una herramienta muy potente que permite definir muchos tipos y trabajar con ellos de manera sencilla. Además las clases genéricas nos ayudan a ahorrar mucho código haciendo que no tengamos que repetir la misma función una y otra vez si no tan solo en la clase padre. Por último las interfaces son bastante buenas a la hora de prevenir herrores pues te aseguras de que un objeto de un tipo siempre vaya a tener los atributos y métodos mínimos necesarios.
+Las clases e interfaces genéricas en typescript son una herramienta muy potente pues nos ayudan a definir e implementar multitud de objetos qu ecompartan muchos atributos entre si. Las interfaces nos ayudan a asegurarnos de que un objeto cumple una serie de características predefinidas. Muientras que las clases genéricas nos ayudan a definir varios tipos de objetos de distinto tipo pero que se manejan del mismo mod. Así nos podemos olvidar del tipo y centrarnos en los métodos.
