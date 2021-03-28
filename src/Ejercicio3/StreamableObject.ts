@@ -31,15 +31,21 @@ export abstract class StreamableObject implements Streamable {
   /**
    * Returns the name of the object.
    */
-  abstract getName(): string;
+  public getName(): string {
+    return this.name_;
+  }
 
   /**
    * Returns the release date of the object.
    */
-  abstract getDate(): string;
+  public getDate(): string {
+    return this.date_;
+  }
 
   /**
    * Returns the director of the object.
    */
-  abstract getDirector(): string;
+  public getDirector(): string {
+    return this.director_;
+  }
 }

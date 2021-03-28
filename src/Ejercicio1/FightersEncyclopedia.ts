@@ -31,11 +31,12 @@ export class FighterEncyclopedia {
    * a fighter with default stats, that's 0 in all stats and no name.
    */
   public getByName(fighterName: string): Fighter | number {
-    this.encyclopedia.forEach((fighter) => {
+    /* this.encyclopedia.forEach((fighter) => {
       if (fighter.name === fighterName) {
         return fighter;
       }
     });
+    */
     return -1;
   }
 
